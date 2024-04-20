@@ -44,6 +44,6 @@ func (app *App) setupServerAndRoutes() error {
 }
 
 func (app *App) registerRoutes(router *gin.Engine) {
-	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	// router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.POST("/validate", app.validCardHTTPHandler.ValidateCardInfo())
 }
