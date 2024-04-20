@@ -1,0 +1,61 @@
+basePath: /
+definitions:
+  validcard.Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  validcard.RequestBody:
+    properties:
+      cardNumber:
+        type: string
+      expirationMonth:
+        type: integer
+      expirationYear:
+        type: integer
+    type: object
+  validcard.ResponseBody:
+    properties:
+      error:
+        $ref: '#/definitions/validcard.Error'
+      valid:
+        type: boolean
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: danyilmykolaobertan@gmail.com
+    name: Danyil-Mykola Obertan
+  description: This is a simple API to validate credit card information such as card number, expiration month and expiration year
+  title: Credit Card Validator API
+  version: "2.0"
+paths:
+  /validate:
+    post:
+      consumes:
+      - application/json
+      description: Validates the card number, expiration month, and expiration year, and returns whether the card is valid or not based on various checks including empty fields, format validation, and the Luhn algorithm.
+      parameters:
+      - description: Card Information
+        in: body
+        name: requestBody
+        required: true
+        schema:
+          $ref: '#/definitions/validcard.RequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'valid": true} "Response when the card information is valid, error field may be null if there are no errors.'
+          schema:
+            $ref: '#/definitions/validcard.ResponseBody'
+        "400":
+          description: 'error": {"code": 400, "message": "invalid card number"}, "valid": false} "Response when there is an error in card validation.'
+          schema:
+            $ref: '#/definitions/validcard.ResponseBody'
+      summary: Validate card information
+      tags:
+      - CardValidation
+swagger: "2.0"

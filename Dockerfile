@@ -24,8 +24,14 @@ WORKDIR /root/
 # Copy the Pre-built binary file from the previous stage
 COPY --from=builder /app/valicard .
 
+# Copy the configuration directory into the container
+COPY ./config /root/config
+
 # Expose port 8080 to the outside world
 EXPOSE 8080
+
+# Environment variable to specify the configuration path
+ENV CONFIG_PATH="/root/config"
 
 # Command to run the executable
 CMD ["./valicard"]

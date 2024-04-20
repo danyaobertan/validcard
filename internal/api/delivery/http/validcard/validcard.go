@@ -29,14 +29,15 @@ type Handler struct {
 	validCardService services.ValidCard
 }
 
-// ValidateCardInfo
-// @Summary validate card information
-// @Schemes
-// @Description return whether the card is valid or not according to the card number, expiration month and expiration year
-// @Produce  	json
-// @Param request body 			requestBody 		true "query params"
-// @Success 	200 			{object} 			responseBody
-// @Failure 	400 			{object} 			Error
+// ValidateCardInfo validates card information and returns validation results.
+// @Summary Validate card information
+// @Description Validates the card number, expiration month, and expiration year, and returns whether the card is valid or not based on various checks including empty fields, format validation, and the Luhn algorithm.
+// @Tags CardValidation
+// @Accept json
+// @Produce json
+// @Param requestBody body RequestBody true "Card Information" example({"cardNumber": "5346464212502892", "expirationMonth": 1, "expirationYear": 2025})
+// @Success 200 {object} ResponseBody {"valid": true} "Response when the card information is valid, error field may be null if there are no errors."
+// @Failure 400 {object} ResponseBody {"error": {"code": 400, "message": "invalid card number"}, "valid": false} "Response when there is an error in card validation."
 // @Router /validate [post]
 func (h Handler) ValidateCardInfo() func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {

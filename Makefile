@@ -9,6 +9,10 @@ install:
 	@echo "Installing dependencies..."
 	go mod download
 
+run: install
+	@echo "Running $(APP_NAME)..."
+	go run ./cmd/app
+
 # Build the binary for the application
 build: install
 	@echo "Building $(APP_NAME)..."
@@ -54,6 +58,7 @@ docker-clean:
 help:
 	@echo "Usage:"
 	@echo "  make install       - Install all dependencies."
+	@echo "  make run           - Run the application."
 	@echo "  make build         - Build the executable binary."
 	@echo "  make test          - Run tests."
 	@echo "  make lint          - Run linter."

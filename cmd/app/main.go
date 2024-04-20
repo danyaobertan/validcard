@@ -12,12 +12,14 @@ import (
 )
 
 // @title Credit Card Validator API
-// @version 1.0
+// @version 2.0
 // @description This is a simple API to validate credit card information such as card number, expiration month and expiration year
 
+// @contact.name   Danyil-Mykola Obertan
+// @contact.email  danyilmykolaobertan@gmail.com
+
 // @host localhost:8080
-// @BasePath /
-// @Schemes http
+// @BasePath  /
 
 func main() {
 	if err := config.ReadConfig(); err != nil {

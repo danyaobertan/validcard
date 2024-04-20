@@ -1,0 +1,94 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a simple API to validate credit card information such as card number, expiration month and expiration year",
+        "title": "Credit Card Validator API",
+        "contact": {
+            "name": "Danyil-Mykola Obertan",
+            "email": "danyilmykolaobertan@gmail.com"
+        },
+        "version": "2.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/validate": {
+            "post": {
+                "description": "Validates the card number, expiration month, and expiration year, and returns whether the card is valid or not based on various checks including empty fields, format validation, and the Luhn algorithm.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CardValidation"
+                ],
+                "summary": "Validate card information",
+                "parameters": [
+                    {
+                        "description": "Card Information",
+                        "name": "requestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/validcard.RequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "valid\": true} \"Response when the card information is valid, error field may be null if there are no errors.",
+                        "schema": {
+                            "$ref": "#/definitions/validcard.ResponseBody"
+                        }
+                    },
+                    "400": {
+                        "description": "error\": {\"code\": 400, \"message\": \"invalid card number\"}, \"valid\": false} \"Response when there is an error in card validation.",
+                        "schema": {
+                            "$ref": "#/definitions/validcard.ResponseBody"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "validcard.Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "validcard.RequestBody": {
+            "type": "object",
+            "properties": {
+                "cardNumber": {
+                    "type": "string"
+                },
+                "expirationMonth": {
+                    "type": "integer"
+                },
+                "expirationYear": {
+                    "type": "integer"
+                }
+            }
+        },
+        "validcard.ResponseBody": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "$ref": "#/definitions/validcard.Error"
+                },
+                "valid": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

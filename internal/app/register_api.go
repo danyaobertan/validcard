@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"time"
 
+	"net/http"
+
 	validCard "github.com/danyaobertan/validcard/internal/api/delivery/http/validcard"
 	validCardService "github.com/danyaobertan/validcard/internal/api/services/validcard"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
-	"net/http"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 const (
@@ -44,6 +47,9 @@ func (app *App) setupServerAndRoutes() error {
 }
 
 func (app *App) registerRoutes(router *gin.Engine) {
-	// router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.Static("/docs", "./docs")
+
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("/swagger.json")))
+
 	router.POST("/validate", app.validCardHTTPHandler.ValidateCardInfo())
 }
