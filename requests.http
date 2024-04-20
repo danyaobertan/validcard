@@ -1,0 +1,34 @@
+@host = http://localhost:8080
+
+###
+# Request to validate a credit card that is expected to be valid
+POST {{host}}/validate
+Content-Type: application/json
+
+{
+  "cardNumber": "4111111111111111",
+  "expirationMonth": 12,
+  "expirationYear": 2028
+}
+
+###
+# Request to validate a credit card that is expected to be invalid due to past expiration date
+POST {{host}}/validate
+Content-Type: application/json
+
+{
+  "cardNumber": "4111111111111111",
+  "expirationMonth": 1,
+  "expirationYear": 2021
+}
+
+###
+# Request to validate a credit card that is expected to be invalid due to an incorrect number
+POST {{host}}/validate
+Content-Type: application/json
+
+{
+  "cardNumber": "1234567890123456",
+  "expirationMonth": 10,
+  "expirationYear": 2028
+}
